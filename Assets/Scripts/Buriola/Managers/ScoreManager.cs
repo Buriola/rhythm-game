@@ -4,15 +4,15 @@ namespace Buriola.Managers
 {
     public class ScoreManager : Singleton<ScoreManager>
     {
-        private int _score;
-        private int _combo;
-        private int _greatestCombo;
+        public int Score { get; private set; }
+        public int Combo { get; private set; }
+        public int GreatestCombo { get; private set; }
+
+        public int NotePercentage { get; private set; }
+        public int Multiplier { get; private set; }
 
         private int _noteStreak;
         private int _totalNotes;
-        private float _notePercentage;
-
-        private int _multiplier;
         
         [SerializeField] private UnityEngine.Events.UnityEvent onScoreChange = default;
         [Space] [SerializeField] private UnityEngine.Events.UnityEvent onComboChange = default;
@@ -26,23 +26,23 @@ namespace Buriola.Managers
         
         private void Init()
         {
-            _notePercentage = 0;
-            _score = 0;
-            _combo = 0;
-            _multiplier = 1;
+            NotePercentage = 0;
+            Score = 0;
+            Combo = 0;
+            Multiplier = 1;
             _totalNotes = 0;
-            _greatestCombo = 0;
+            GreatestCombo = 0;
         }
 
         private void Start()
         {
-            _totalNotes = NoteManager.Instance.Notes();
+            _totalNotes = NoteManager.Instance.Notes;
         }
         
         private void IncreaseCombo()
         {
-            _combo++;
-            if (_greatestCombo < _combo) _greatestCombo = _combo;
+            Combo++;
+            if (GreatestCombo < Combo) GreatestCombo = Combo;
             
             onComboChange?.Invoke();
             
@@ -51,14 +51,14 @@ namespace Buriola.Managers
         
         private void UpdateMultiplier()
         {
-            if (_combo < 10)
-                _multiplier = 1;
-            else if (_combo < 30)
-                _multiplier = 2;
-            else if (_combo < 50)
-                _multiplier = 4;
+            if (Combo < 10)
+                Multiplier = 1;
+            else if (Combo < 30)
+                Multiplier = 2;
+            else if (Combo < 50)
+                Multiplier = 4;
             else
-                _multiplier = 8;
+                Multiplier = 8;
             
             onMultiplierChange?.Invoke();
         }
@@ -74,15 +74,15 @@ namespace Buriola.Managers
             else
                 ResetCombo();
             
-            _notePercentage = Mathf.Round(((float) _noteStreak / (float) _totalNotes * 100f) * 10) / 10f;
+            NotePercentage = (int) (Mathf.Round((_noteStreak / (float) _totalNotes * 100f) * 10) / 10f);
             
             onPercentageChange?.Invoke();
         }
         
-        public void ResetCombo()
+        private void ResetCombo()
         {
-            _combo = 0;
-            _multiplier = 1;
+            Combo = 0;
+            Multiplier = 1;
             
             onComboChange?.Invoke();
             onMultiplierChange?.Invoke();
@@ -90,42 +90,9 @@ namespace Buriola.Managers
         
         public void IncreaseScore(int value)
         {
-            _score += (value * _multiplier);
+            Score += (value * Multiplier);
             
             onScoreChange?.Invoke();
-        }
-        
-        public int GetScore()
-        {
-            return _score;
-        }
-
-        public int GetCombo()
-        {
-            return _combo;
-        }
-
-        public int GetMultiplier()
-        {
-            return _multiplier;
-        }
-
-        public int GetPercentage()
-        {
-            if (_notePercentage <= 0)
-                return 0;
-
-            return Mathf.RoundToInt(_notePercentage);
-        }
-
-        public int GetTotalNotes()
-        {
-            return _totalNotes;
-        }
-
-        public int GetGreatestCombo()
-        {
-            return _greatestCombo;
         }
     }
 }

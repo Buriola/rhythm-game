@@ -9,7 +9,7 @@ namespace Buriola.Pooler
         private readonly List<ObjectPoolContainer<T>> _list;
         private readonly Dictionary<T, ObjectPoolContainer<T>> _lookup;
         private readonly Func<T> _factoryFunc;
-        private int _lastIndex = 0;
+        private int _lastIndex ;
 
         public ObjectPool(Func<T> factoryFunc, int initialSize)
         {
@@ -31,8 +31,7 @@ namespace Buriola.Pooler
 
         private ObjectPoolContainer<T> CreateContainer()
         {
-            var container = new ObjectPoolContainer<T>();
-            container.Item = _factoryFunc();
+            var container = new ObjectPoolContainer<T> {Item = _factoryFunc()};
             _list.Add(container);
             return container;
         }
@@ -40,17 +39,15 @@ namespace Buriola.Pooler
         public T GetItem()
         {
             ObjectPoolContainer<T> container = null;
-            for (int i = 0; i < _list.Count; i++)
+            foreach (var t in _list)
             {
                 _lastIndex++;
                 if (_lastIndex > _list.Count - 1) _lastIndex = 0;
 
                 if (_list[_lastIndex].Used) continue;
-                else
-                {
-                    container = _list[_lastIndex];
-                    break;
-                }
+                
+                container = _list[_lastIndex];
+                break;
             }
 
             if (container == null)
@@ -59,11 +56,6 @@ namespace Buriola.Pooler
             container.Consume();
             _lookup.Add(container.Item, container);
             return container.Item;
-        }
-
-        public void ReleaseItem(object item)
-        {
-            ReleaseItem((T) item);
         }
 
         public void ReleaseItem(T item)

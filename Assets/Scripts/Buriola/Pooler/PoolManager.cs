@@ -47,25 +47,20 @@ namespace Buriola.Pooler
             SceneManager.sceneLoaded -= OnSceneLoadedCallback;
         }
 
-        public void warmPool(GameObject prefab, int size)
+        private void warmPool(GameObject prefab, int size)
         {
             if (_prefabLookup.ContainsKey(prefab))
             {
                 throw new System.Exception("Pool for prefab " + prefab.name + " has already been created");
             }
 
-            var pool = new ObjectPool<GameObject>(() => { return InstantiatePrefab(prefab); }, size);
+            var pool = new ObjectPool<GameObject>(() => InstantiatePrefab(prefab), size);
             _prefabLookup[prefab] = pool;
 
             _dirty = true;
         }
 
-        public GameObject spawnObject(GameObject prefab)
-        {
-            return spawnObject(prefab, Vector3.zero, Quaternion.identity);
-        }
-
-        public GameObject spawnObject(GameObject prefab, Vector3 position, Quaternion rotation)
+        private GameObject spawnObject(GameObject prefab, Vector3 position, Quaternion rotation)
         {
             if (!_prefabLookup.ContainsKey(prefab))
                 WarmPool(prefab, 1);
@@ -82,7 +77,7 @@ namespace Buriola.Pooler
             return clone;
         }
 
-        public void releaseObject(GameObject clone)
+        private void releaseObject(GameObject clone)
         {
             clone.SetActive(false);
 
@@ -100,17 +95,16 @@ namespace Buriola.Pooler
 
         private GameObject InstantiatePrefab(GameObject prefab)
         {
-            var go = Instantiate(prefab) as GameObject;
+            var go = Instantiate(prefab);
             if (Root != null) go.transform.parent = Root;
             return go;
         }
 
-        public void PrintStatus()
+        private void PrintStatus()
         {
             foreach (KeyValuePair<GameObject, ObjectPool<GameObject>> keyVal in _prefabLookup)
             {
-                Debug.Log(string.Format("Object Pool for Prefab: {0} In Use: {1} Total {2}", keyVal.Key.name,
-                    keyVal.Value.CountUsedItems, keyVal.Value.Count));
+                Debug.Log($"Object Pool for Prefab: {keyVal.Key.name} In Use: {keyVal.Value.CountUsedItems} Total {keyVal.Value.Count}");
             }
         }
 
@@ -119,11 +113,6 @@ namespace Buriola.Pooler
         public static void WarmPool(GameObject prefab, int size)
         {
             Instance.warmPool(prefab, size);
-        }
-
-        public static GameObject SpawnObject(GameObject prefab)
-        {
-            return Instance.spawnObject(prefab);
         }
 
         public static GameObject SpawnObject(GameObject prefab, Vector3 position, Quaternion rotation)

@@ -17,17 +17,17 @@ namespace Buriola.Managers
         [SerializeField] 
         private NoteSpawner[] _noteSpawners = null;
         
-        public float Beginning { get; set; }
+        public float Beginning { get; private set; }
         
         private List<Note> _redNotes;
         private List<Note> _blueNotes;
         private List<Note> _yellowNotes;
 
         private bool _started;
-        private int _notes;
         private bool _songEnded;
         private bool _gameOver;
         
+        public int Notes { get; private set; }
         public static int NotesPlayed;
 
         private void Start()
@@ -43,13 +43,13 @@ namespace Buriola.Managers
                 InitSpawners();
             }
             
-            _notes = _redNotes.Count + _blueNotes.Count + _yellowNotes.Count;
+            Notes = _redNotes.Count + _blueNotes.Count + _yellowNotes.Count;
         }
 
         private void Update()
         {
             if (_started)
-                _songEnded = NotesPlayed == _notes;
+                _songEnded = NotesPlayed == Notes;
             
             if ((_songEnded && !_gameOver) || _gameOver)
                 HandleGameOver();
@@ -69,7 +69,6 @@ namespace Buriola.Managers
             yield return new WaitForSeconds(1f);
             _started = true;
             AudioManager.SetMusic(_song.MusicFile); //Set music
-            AudioManager.GetMusicLength();
             yield return null;
         }
         
@@ -84,35 +83,30 @@ namespace Buriola.Managers
             if (_song.ChartFile == null)
                 return;
 
-            System.String json = _song.ChartFile.text;
+            var json = _song.ChartFile.text;
 
-            IDictionary search = (IDictionary) Json.Deserialize(json); //Deserializes
+            var search = (IDictionary) Json.Deserialize(json); //Deserializes
 
             //Looking for the red notes
-            IList red = (IList) search["A"];
+            var red = (IList) search["A"];
             _redNotes = new List<Note>(); //Populating red note list
             foreach (IDictionary note in red)
-                _redNotes.Add(new Note(System.Int32.Parse(note["start"].ToString()),
-                    System.Int32.Parse(note["length"].ToString())));
+                _redNotes.Add(new Note(int.Parse(note["start"].ToString()),
+                    int.Parse(note["length"].ToString())));
 
             //Blue Notes
-            IList blue = (IList) search["B"];
+            var blue = (IList) search["B"];
             _blueNotes = new List<Note>(); //Populating blue note list
             foreach (IDictionary note in blue)
-                _blueNotes.Add(new Note(System.Int32.Parse(note["start"].ToString()),
-                    System.Int32.Parse(note["length"].ToString())));
+                _blueNotes.Add(new Note(int.Parse(note["start"].ToString()),
+                    int.Parse(note["length"].ToString())));
 
             //Yellow Notes
-            IList yellow = (IList) search["C"];
+            var yellow = (IList) search["C"];
             _yellowNotes = new List<Note>(); //Populating yellow note list
             foreach (IDictionary note in yellow)
-                _yellowNotes.Add(new Note(System.Int32.Parse(note["start"].ToString()),
-                    System.Int32.Parse(note["length"].ToString())));
-        }
-        
-        public bool SongEnded()
-        {
-            return _songEnded;
+                _yellowNotes.Add(new Note(int.Parse(note["start"].ToString()),
+                    int.Parse(note["length"].ToString())));
         }
 
         public bool IsGameOver()
@@ -125,21 +119,16 @@ namespace Buriola.Managers
             _gameOver = value;
         }
         
-        public void HandleGameOver()
+        private void HandleGameOver()
         {
             StartCoroutine(GameOver()); //Calls menu after a while
             _gameOver = true;
             _started = false;
-            //Save Score and Percentage
-            GameController.SaveScore(_song.SongName, ScoreManager.Instance.GetScore(),
-                ScoreManager.Instance.GetPercentage());
-            //Fades music
+            
+            GameController.SaveScore(_song.SongName, ScoreManager.Instance.Score,
+                ScoreManager.Instance.NotePercentage);
+            
             AudioManager.FadeOutMusic(10f);
-        }
-
-        public int Notes()
-        {
-            return _notes;
         }
     }
 }

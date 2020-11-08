@@ -52,10 +52,6 @@ namespace Buriola.NoteBehaviors
         {
             yield return new WaitForSeconds(start - GetTime() - 1.5f);
             
-            float z = length / 0.2f;
-            Vector3 startPos = new Vector3(transform.position.x, transform.position.y,
-                transform.position.z + (z - 1) / 2);
-            
             GameObject obj = PoolManager.SpawnObject(_notePrefab, transform.position, transform.rotation);
             
             obj.transform.localScale = new Vector3(obj.transform.localScale.x, obj.transform.localScale.y,

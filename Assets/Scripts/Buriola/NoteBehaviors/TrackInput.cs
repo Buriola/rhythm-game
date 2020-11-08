@@ -93,13 +93,13 @@ namespace Buriola.NoteBehaviors
                 _isPlaying = true;
                 //Change Y position of the object for feedback
                 transform.position =
-                    new Vector3(transform.position.x, DESIRED_Y, transform.position.z); // Changing Y position
+                    new Vector3(transform.position.x, DESIRED_Y, transform.position.z);
             }
             else if (Input.GetKeyUp(_inputKey))
             {
                 _isPlaying = false;
                 transform.position =
-                    new Vector3(transform.position.x, _defaultY, transform.position.z); // Reseting Y position
+                    new Vector3(transform.position.x, _defaultY, transform.position.z);
             }
         }
 

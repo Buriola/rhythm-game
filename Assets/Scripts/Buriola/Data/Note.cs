@@ -3,25 +3,12 @@
     [System.Serializable]
     public class Note
     {
-        private int _start;
-        private int _length;
-        
         public Note(int start, int length)
         {
-            _start = start;
-            _length = length;
+            Start = start;
+            Length = length;
         }
-        
-        public int Start
-        {
-            get => _start;
-            set => _start = value;
-        }
-
-        public int Length
-        {
-            get => _length;
-            set => _length = value;
-        }
+        public int Start { get; set; }
+        public int Length { get; set; }
     }
 }

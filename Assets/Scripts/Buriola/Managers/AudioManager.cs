@@ -9,10 +9,6 @@ namespace Buriola.Managers
         [FormerlySerializedAs("musicAudio")] 
         [SerializeField] 
         private AudioSource _musicAudio = null;
-        
-        [FormerlySerializedAs("sfxAudio")] 
-        [SerializeField] 
-        private AudioSource _sfxAudio = null;
 
         private static float _musicVolume;
 
@@ -23,34 +19,9 @@ namespace Buriola.Managers
 
         #region Static API
         
-        public static void PlayMusic()
-        {
-            Instance._musicAudio.Play();
-        }
-        
         public static void FadeOutMusic(float fadeOutTime)
         {
             Instance.StartCoroutine(Instance.FadeOut(Instance._musicAudio, fadeOutTime));
-        }
-        
-        public static void PlaySFX()
-        {
-            Instance._sfxAudio.Play();
-        }
-        
-        public static void PauseMusic()
-        {
-            Instance._musicAudio.Pause();
-        }
-        
-        public static void StopMusic()
-        {
-            Instance._musicAudio.Stop();
-        }
-        
-        public static float GetMusicLength()
-        {
-            return Instance._musicAudio.clip.length;
         }
         
         public static void SetMusic(AudioClip clip)

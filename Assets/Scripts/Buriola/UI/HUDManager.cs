@@ -50,9 +50,7 @@ namespace Buriola.UI
         {
             if (_hudText != null)
             {
-                string s = ScoreManager.Instance.GetMultiplier().ToString() + "X\n" +
-                           ScoreManager.Instance.GetScore().ToString() + "\n" +
-                           ScoreManager.Instance.GetCombo().ToString() + "HITS!";
+                string s = $"{ScoreManager.Instance.Multiplier.ToString()}X\n{ScoreManager.Instance.Score.ToString()}\n {ScoreManager.Instance.Combo.ToString()} HITS!";
                 s = s.Replace("\n", System.Environment.NewLine);
 
                 _hudText.text = s;
@@ -65,10 +63,9 @@ namespace Buriola.UI
                 HealthManager.Instance.Failed ? "Game Over!" : "You Rock!";
             _titleText.color = HealthManager.Instance.Failed ? Color.red : Color.green;
             
-            _scoreText.text = "Score: " + ScoreManager.Instance.GetScore().ToString();
-            _comboText.text = "Greatest Combo: " + ScoreManager.Instance.GetGreatestCombo().ToString();
-            _percentText.text = "Hit Percentage: " + ScoreManager.Instance.GetPercentage().ToString() + "%";
-
+            _scoreText.text = "Score: " + ScoreManager.Instance.Score.ToString();
+            _comboText.text = "Greatest Combo: " + ScoreManager.Instance.GreatestCombo.ToString();
+            _percentText.text = "Hit Percentage: " + ScoreManager.Instance.NotePercentage.ToString() + "%";
         }
         
         public void UpdateHealth()

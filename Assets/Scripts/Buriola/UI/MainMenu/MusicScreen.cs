@@ -44,19 +44,19 @@ namespace Buriola.UI.MainMenu
         
         private void SearchSongs()
         {
-            for (int i = 0; i < _songs.Length; i++)
+            foreach (Song t in _songs)
             {
                 GameObject o = Instantiate(_buttonPrefab, _buttonRoot);
-                o.GetComponent<MusicButton>().SongReference = _songs[i];
-                o.GetComponentInChildren<UnityEngine.UI.Text>().text = _songs[i].ArtistName + " - " + _songs[i].SongName;
+                o.GetComponent<MusicButton>().SongReference = t;
+                o.GetComponentInChildren<UnityEngine.UI.Text>().text = t.ArtistName + " - " + t.SongName;
 
                 GameObject o1 = Instantiate(_highScorePrefab, _highScoreRoot);
                 o1.GetComponent<UnityEngine.UI.Text>().text =
-                    "High score: " + GameController.LoadScore(_songs[i].SongName).ToString(); //Loading score
+                    "High score: " + GameController.LoadScore(t.SongName).ToString(); //Loading score
 
                 GameObject o2 = Instantiate(_percentagePrefab, _percentRoot);
                 o2.GetComponent<UnityEngine.UI.Text>().text =
-                    "Percent: " + GameController.LoadPercent(_songs[i].SongName).ToString() +
+                    "Percent: " + GameController.LoadPercent(t.SongName).ToString() +
                     "%"; //Loading hit percentage
             }
         }
