@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd4a54ba10cad34087ca6fb671a9163, type: 3}
+  m_Name: You Make Me
+  m_EditorClassIdentifier: 
+  songName: You Make me
+  artistName: AVICII
+  musicFile: {fileID: 8300000, guid: 1f75b3b46a9cef64e97731acfaf17aff, type: 3}
+  chartFile: {fileID: 4900000, guid: 1e6f16adcfe6d6e418c835512e8c68fa, type: 3}
