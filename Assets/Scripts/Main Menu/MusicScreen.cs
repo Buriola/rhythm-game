@@ -10,19 +10,19 @@ public class MusicScreen : MonoBehaviour
 {
     //Prefabs to instantiate in the grid
     [SerializeField]
-    private GameObject buttonPrefab;
+    private GameObject buttonPrefab = null;
     [SerializeField]
-    private GameObject highScorePrefab;
+    private GameObject highScorePrefab = null;
     [SerializeField]
-    private GameObject percentagePrefab;
+    private GameObject percentagePrefab = null;
 
     //Reference of the transforms
     [SerializeField]
-    private RectTransform buttonRoot;
+    private RectTransform buttonRoot = null;
     [SerializeField]
-    private RectTransform highScoreRoot;
+    private RectTransform highScoreRoot = null;
     [SerializeField]
-    private RectTransform percentRoot;
+    private RectTransform percentRoot = null;
 
     //List of all songs in the project
     private List<Song> songs;

@@ -9,9 +9,9 @@ public class AudioManager : Singleton<AudioManager>
 {
     //Two audio sources
     [SerializeField]
-    private AudioSource musicAudio;
+    private AudioSource musicAudio = null;
     [SerializeField]
-    private AudioSource sfxAudio;
+    private AudioSource sfxAudio = null;
 
     private static float musicVolume;
     private static float sfxVolume;

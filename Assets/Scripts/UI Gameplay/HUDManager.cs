@@ -6,26 +6,26 @@
 public class HUDManager : Singleton<HUDManager>
 {
     [SerializeField]
-    private Canvas gameOverMenu; //Reference of the Game Over Menu
+    private Canvas gameOverMenu = null; //Reference of the Game Over Menu
 
     //UI Components references beloe
     [SerializeField]
-    private UnityEngine.UI.Text hudText;
+    private UnityEngine.UI.Text hudText = null;
     [SerializeField]
-    private UnityEngine.UI.Slider healthSlider;
+    private UnityEngine.UI.Slider healthSlider = null;
     [SerializeField]
-    private UnityEngine.UI.Image healthImage;
+    private UnityEngine.UI.Image healthImage = null;
 
     [Space]
     
     [SerializeField]
-    private UnityEngine.UI.Text titleText;
+    private UnityEngine.UI.Text titleText = null;
     [SerializeField]
-    private UnityEngine.UI.Text scoreText;
+    private UnityEngine.UI.Text scoreText = null;
     [SerializeField]
-    private UnityEngine.UI.Text comboText;
+    private UnityEngine.UI.Text comboText = null;
     [SerializeField]
-    private UnityEngine.UI.Text percentText;
+    private UnityEngine.UI.Text percentText = null;
 
 
     private void Start()

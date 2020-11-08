@@ -11,14 +11,11 @@ public class NoteSpawner : MonoBehaviour
     private List<Note> notesToSpawn;
 
     [SerializeField]
-    private GameObject notePrefab; //The prefab of the Note
-
-    [SerializeField]
-    private TrackInput noteTrack; //The track it belongs to
+    private GameObject notePrefab = null; //The prefab of the Note
 
     [Range(10, 30)]
     [SerializeField]
-    private int poolSize; //Value to determine the Pool Size 
+    private int poolSize = 0; //Value to determine the Pool Size 
 
     //Reference to the Manager, we receive this.
     private NoteManager noteManager;

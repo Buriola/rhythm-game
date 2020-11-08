@@ -12,7 +12,7 @@ public class TrackInput : MonoBehaviour
     [SerializeField]
     private bool checkForInput = true; // Should it check for inputs?
     [SerializeField]
-    private KeyCode inputKey; //Which key to use for this object
+    private KeyCode inputKey = default; //Which key to use for this object
 
     // Auxiliar values to change Y position (Press effect)
     private float defaultY;

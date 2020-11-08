@@ -11,14 +11,14 @@ public class HealthManager : Singleton<HealthManager>
 
     [SerializeField]
     [Range(100, 200)]
-    private float maxHealth; //Max Health
+    private float maxHealth = 100; //Max Health
     private float currentHealth; //Currente Health
 
     //Events for UI subscription or whoelse is interested to know this
     [SerializeField]
-    private UnityEngine.Events.UnityEvent onHealthChange;
+    private UnityEngine.Events.UnityEvent onHealthChange = default;
     [SerializeField]
-    private UnityEngine.Events.UnityEvent onHealthReachingZero;
+    private UnityEngine.Events.UnityEvent onHealthReachingZero = default;
 
     private void Start()
     {

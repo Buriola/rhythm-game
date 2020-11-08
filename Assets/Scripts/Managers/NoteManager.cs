@@ -9,12 +9,10 @@ using MiniJSON;
 public class NoteManager : Singleton<NoteManager>
 {
     [SerializeField]
-    private Song song; //Reference of the current song being played
+    private Song song = null; //Reference of the current song being played
 
     [SerializeField]
-    private NoteSpawner[] noteSpawners; //Reference of the spawners
-
-    private float offsetTime = 0.4f; //Aux values
+    private NoteSpawner[] noteSpawners = null; //Reference of the spawners
 
     //Stores the period of time a song started
     public float Beginning { get; set; }

@@ -19,16 +19,16 @@ public class ScoreManager : Singleton<ScoreManager>
     
     //Events for UI Subscription or whoelse is interested to know these events
     [SerializeField]
-    private UnityEngine.Events.UnityEvent onScoreChange;
+    private UnityEngine.Events.UnityEvent onScoreChange = default;
     [Space]
     [SerializeField]
-    private UnityEngine.Events.UnityEvent onComboChange;
+    private UnityEngine.Events.UnityEvent onComboChange = default;
     [Space]
     [SerializeField]
-    private UnityEngine.Events.UnityEvent onMultiplierChange;
+    private UnityEngine.Events.UnityEvent onMultiplierChange = default;
     [Space]
     [SerializeField]
-    private UnityEngine.Events.UnityEvent onPercentageChange;
+    private UnityEngine.Events.UnityEvent onPercentageChange = default;
 
     private void Awake()
     {

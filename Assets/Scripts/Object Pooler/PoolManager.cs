@@ -1,6 +1,7 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// The Pool Manager handles all active pools in the scene and can make new ones if necessary
@@ -22,15 +23,16 @@ public class PoolManager : Singleton<PoolManager>
 
         if (Instance != null && Instance != this)
             Destroy(gameObject);
+
+        SceneManager.sceneLoaded += OnSceneLoadedCallback;
     }
 
-    private void OnLevelWasLoaded(int level)
+    private void OnSceneLoadedCallback(Scene scene, LoadSceneMode mode)
     {
-        if(level == 1)
-        {
-            prefabLookup = new Dictionary<GameObject, ObjectPool<GameObject>>();
-            instanceLookup = new Dictionary<GameObject, ObjectPool<GameObject>>();
-        }
+        if (scene.buildIndex != 1) return;
+        
+        prefabLookup = new Dictionary<GameObject, ObjectPool<GameObject>>();
+        instanceLookup = new Dictionary<GameObject, ObjectPool<GameObject>>();
     }
 
     private void Update ()
@@ -41,6 +43,11 @@ public class PoolManager : Singleton<PoolManager>
             dirty = false;
         }
 	}
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoadedCallback;
+    }
 
     public void warmPool(GameObject prefab, int size)
     {
