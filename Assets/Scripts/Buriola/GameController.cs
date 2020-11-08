@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Buriola.Data;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -113,5 +114,4 @@ public class GameController : Singleton<GameController>
     {
         Application.Quit();
     }
-
 }
